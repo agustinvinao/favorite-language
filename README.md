@@ -39,7 +39,7 @@ Run tests:
 ruby github_test.rb
 ```
 
-I mocked the http resquests in tests and put 4 json files to represent the cases I'm testing.
+I mocked the http resquests in tests and I put 4 json files to represent the cases I'm testing.
 All json files has the same structure as an api response, only with less data, the data I use
 to get all the info.
 
