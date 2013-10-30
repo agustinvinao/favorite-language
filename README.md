@@ -10,7 +10,7 @@ Usage:
 Show options:
 
 ```
-ruby favorite -h 
+ruby favorite.rb -h 
 
 Usage: favorite.rb [options] -u GITHUB-USERNAME
     -u, --username GITHUB-USERNAME   Set github username to see favourite language
@@ -22,14 +22,14 @@ Usage: favorite.rb [options] -u GITHUB-USERNAME
 If the username has public respositories:
 
 ```
-ruby favorite -u username
+ruby favorite.rb -u username
 The user's favorite(s) language(s): Ruby
 ```
 
 If the username doesn't exists:
 
 ```
-ruby favorite -u username
+ruby favorite.rb -u username
 The user's favorite(s) language(s): Username not found
 ```
 
