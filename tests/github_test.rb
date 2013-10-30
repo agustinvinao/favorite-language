@@ -23,7 +23,7 @@ describe Github do
     end
 
     it "should return the maximun number of repos" do
-      @github.max_repos.must_equal 3
+      @github.max_repos_size.must_equal 3
     end
   end
 
@@ -48,6 +48,15 @@ describe Github do
   describe "username not found in github" do
     it "should return Ruby and Python as the max lenguage" do
       username = "usertest"
+      stub_request(:get, "https://api.github.com/users/#{username}/repos").to_return(:status => 200, :body => File.read(File.expand_path("../data/not_found.json", __FILE__)), :headers => {})
+      github = Github.new({username: username})
+      github.max_languages_names.must_equal Github::USERNAME_NOT_FOUND
+    end
+  end
+
+  describe "no username given" do
+    it "should " do
+      username = ""
       stub_request(:get, "https://api.github.com/users/#{username}/repos").to_return(:status => 200, :body => File.read(File.expand_path("../data/not_found.json", __FILE__)), :headers => {})
       github = Github.new({username: username})
       github.max_languages_names.must_equal Github::USERNAME_NOT_FOUND

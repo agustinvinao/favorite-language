@@ -25,18 +25,19 @@ class Github
     get_repos
   end
 
+
   # Gets the number of maximun respositories for all languages
-  def max_repos
+  def max_repos_size
     repos_per_languages.values.max
   end
 
-  # Gets the name(s) for the languages that matchs the number of {#max_repos}
+  # Gets the name(s) for the languages that matchs the number of {#max_repos_size}
   # if the repos info is not valid, it returns 'Username not found' based on
   # response of {#is_valid?}.
   def max_languages_names
     if is_valid?
       return "None" if repos_per_languages.empty?
-      repos_per_languages.reject{|k,v| v < max_repos}.keys.join(", ")
+      repos_per_languages.reject{|k,v| v < max_repos_size}.keys.join(", ")
     else
       USERNAME_NOT_FOUND
     end
