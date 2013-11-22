@@ -5,7 +5,6 @@ require_relative '../github'
 describe Github do
 
   describe "general tests" do
-
     before do
       username = "usertest"
       stub_request(:get, "https://api.github.com/users/#{username}/repos").to_return(:status => 200, :body => File.read(File.expand_path("../data/repos.json", __FILE__)), :headers => {})
@@ -28,38 +27,46 @@ describe Github do
   end
 
   describe "max repos count return more than one leanguage" do
-    it "should return Ruby and Python as the max lenguage" do
+    before do
       username = "usertest"
       stub_request(:get, "https://api.github.com/users/#{username}/repos").to_return(:status => 200, :body => File.read(File.expand_path("../data/repos_more.json", __FILE__)), :headers => {})
-      github = Github.new({username: username})
-      github.max_languages_names.must_equal "Ruby, Python"
+      @github = Github.new({username: username})
+    end
+    it "should return Ruby and Python as the max lenguage" do
+      @github.max_languages_names.must_equal "Ruby, Python"
     end
   end
 
   describe "the username doesn't have public respositories" do
-    it "should return Ruby and Python as the max lenguage" do
+    before do
       username = "usertest"
       stub_request(:get, "https://api.github.com/users/#{username}/repos").to_return(:status => 200, :body => File.read(File.expand_path("../data/no_repos.json", __FILE__)), :headers => {})
-      github = Github.new({username: username})
-      github.max_languages_names.must_equal "None"
+      @github = Github.new({username: username})
+    end
+    it "should return Ruby and Python as the max lenguage" do
+      @github.max_languages_names.must_equal "None"
     end
   end
 
   describe "username not found in github" do
-    it "should return Ruby and Python as the max lenguage" do
+    before do
       username = "usertest"
       stub_request(:get, "https://api.github.com/users/#{username}/repos").to_return(:status => 200, :body => File.read(File.expand_path("../data/not_found.json", __FILE__)), :headers => {})
-      github = Github.new({username: username})
-      github.max_languages_names.must_equal Github::USERNAME_NOT_FOUND
+      @github = Github.new({username: username})
+    end
+    it "should return Ruby and Python as the max lenguage" do
+      @github.max_languages_names.must_equal Github::USERNAME_NOT_FOUND
     end
   end
 
   describe "no username given" do
-    it "should " do
+    before do
       username = ""
       stub_request(:get, "https://api.github.com/users/#{username}/repos").to_return(:status => 200, :body => File.read(File.expand_path("../data/not_found.json", __FILE__)), :headers => {})
-      github = Github.new({username: username})
-      github.max_languages_names.must_equal Github::USERNAME_NOT_FOUND
+      @github = Github.new({username: username})
+    end
+    it "should get no user found" do
+      @github.max_languages_names.must_equal Github::USERNAME_NOT_FOUND
     end
   end
 end
